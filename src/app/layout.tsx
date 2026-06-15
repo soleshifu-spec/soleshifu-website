@@ -7,10 +7,11 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: 'Sole Shifu | Premium Shoe Care & Sneaker Restoration',
     template: `%s | ${siteConfig.name}`
   },
-  description: siteConfig.description,
+  description:
+    'Premium sneaker cleaning, restoration, whitening, suede care and protection services. Pickup and delivery available. Book instantly on WhatsApp.',
   applicationName: siteConfig.name,
   authors: [{ name: siteConfig.name }],
   openGraph: {
@@ -19,12 +20,13 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.name,
-    description: siteConfig.description
+    description: 'Premium shoe care and restoration'
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.name,
-    description: siteConfig.description
+    title: 'Sole Shifu | Premium Shoe Care & Sneaker Restoration',
+    description:
+      'Premium sneaker cleaning, restoration, whitening, suede care and protection services. Pickup and delivery available. Book instantly on WhatsApp.'
   }
 };
 
