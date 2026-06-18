@@ -18,6 +18,7 @@ import { cn } from '@/lib/cn';
 
 const whatsappUrl = 'https://wa.me/918796345554';
 const instagramUrl = 'https://www.instagram.com/soleshifu';
+const googleReviewsUrl = 'https://g.page/r/CV0S2i32HCe3EBM/review';
 
 const navItems = ['Philosophy', 'Transformations', 'Services', 'Process', 'Reviews'];
 
@@ -98,23 +99,34 @@ const process = [
   ['Return', 'The pair is finished, checked, and returned with the quiet confidence of proper care.']
 ];
 
-const testimonials = [
-  [
-    'Rohan M., Noida',
-    'Craftsmanship you can actually see',
-    'I’ve tried shoe cleaning services before, but Sole Shifu feels different. They didn’t rush my sneakers or overpromise results. The cleaning was detailed, careful, and honest.'
-  ],
-  [
-    'Ankit S., Delhi NCR',
-    'Finally, someone who respects sneakers',
-    'You can tell Sole Shifu understands shoes. They inspected my pair before starting, explained what could and couldn’t be fixed, and delivered exactly that.'
-  ],
-  [
-    'Neha K., Noida',
-    'Worth it for premium pairs',
-    'I was nervous handing over an older pair that had sentimental value. Sole Shifu handled it with care and transparency. That honesty is rare.'
-  ]
+const reviews = [
+  {
+    name: 'Romil B.',
+    rating: 5,
+    date: '2026-06-18',
+    badge: 'Verified Google Review',
+    text: 'Excellent shoe cleaning service. My shoes looked almost brand new after the cleaning. The attention to detail was impressive, the results exceeded expectations, and the entire experience was highly professional.'
+  },
+  {
+    name: 'Vikrant N.',
+    rating: 5,
+    date: '2026-06-17',
+    badge: 'Verified Google Review',
+    text: 'Great service and excellent results. Highly recommended.'
+  },
+  {
+    name: 'Harshita H.',
+    rating: 5,
+    date: '2026-06-16',
+    badge: 'Verified Google Review',
+    text: 'The entire process was smooth and professional, from pickup to delivery. My shoes came back looking almost new and the attention to detail was impressive.'
+  }
 ];
+
+// Add future Google reviews here. Only reviews with rating >= 4.5 are displayed.
+const visibleReviews = reviews
+  .filter((review) => review.rating >= 4.5)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
 const socialImages = [
   'https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=85',
@@ -211,6 +223,16 @@ function GhostButton({ href, children }: { href: string; children: React.ReactNo
   );
 }
 
+function GoogleStars({ className }: { className?: string }) {
+  return (
+    <div className={cn('flex items-center gap-1', className)} aria-label="Five star Google rating">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Star key={index} className="size-4 fill-[#d9c68a] text-[#d9c68a]" strokeWidth={1.6} />
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 800], [0, 92]);
@@ -256,7 +278,7 @@ export default function Home() {
           <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-ink-950 via-ink-950/62 to-transparent" />
         </motion.div>
 
-        <div className="relative z-10 mx-auto flex min-h-[calc(100vh-7rem)] max-w-7xl flex-col justify-between">
+        <div className="relative z-10 mx-auto flex min-h-[calc(100vh-7rem)] max-w-7xl flex-col pb-10">
           <motion.div
             initial={{ opacity: 0, y: 34 }}
             animate={{ opacity: 1, y: 0 }}
@@ -282,12 +304,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 1 }}
-            className="grid gap-0 border-y border-white/[0.075] bg-black/[0.14] backdrop-blur-md sm:grid-cols-3"
+            className="mt-9 grid gap-0 border-y border-white/[0.075] bg-black/[0.14] backdrop-blur-md sm:mt-12 sm:grid-cols-3 lg:mt-[3.25rem]"
           >
             {heroValues.map(({ title, copy, Icon }) => (
               <div
                 key={title}
-                className="flex gap-4 border-b border-white/[0.06] px-1 py-5 sm:border-b-0 sm:border-r sm:px-6 sm:last:border-r-0"
+                className="flex gap-4 border-b border-white/[0.06] px-1 py-7 sm:border-b-0 sm:border-r sm:px-6 sm:py-8 sm:last:border-r-0"
               >
                 <Icon className="mt-1 size-4 shrink-0 text-silver-100/[0.62]" strokeWidth={1.5} />
                 <div>
@@ -565,41 +587,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="reviews" className={compactSectionFrame}>
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <SectionIntro
-            eyebrow="What Our Customers Say"
-            title="Trusted by people who care about their pairs."
-            copy="Real notes from customers who wanted careful work, honest expectations, and shoes returned with confidence."
-          />
-          <div className="mt-12 grid gap-5 md:grid-cols-3 lg:mt-14">
-            {testimonials.map(([name, title, quote], index) => (
-              <motion.figure
-                key={name}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="border border-white/[0.075] bg-white/[0.018] p-7 transition duration-700 hover:border-white/[0.14] hover:bg-white/[0.026]"
-              >
-                <div className="flex gap-1 text-silver-100/[0.78]" aria-label="Five star rating">
-                  {Array.from({ length: 5 }).map((_, starIndex) => (
-                    <Star key={starIndex} className="size-4 fill-current stroke-[1.5]" />
-                  ))}
-                </div>
-                <p className="mt-8 text-xl font-medium leading-8 tracking-[-0.01em] text-silver-100">{title}</p>
-                <blockquote className="mt-5 text-base font-light leading-8 tracking-[-0.005em] text-silver-300/[0.68]">
-                  <span aria-hidden="true">&ldquo;</span>
-                  {quote}
-                  <span aria-hidden="true">&rdquo;</span>
-                </blockquote>
-                <figcaption className="mt-10 text-[11px] uppercase tracking-[0.28em] text-silver-300/[0.38]">{name}</figcaption>
-              </motion.figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className={compactSectionFrame}>
         <div className="relative z-10 mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
@@ -645,6 +632,81 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className={compactSectionFrame}>
+        <div className="relative z-10 mx-auto max-w-7xl">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="grid items-start gap-8 border-y border-white/[0.075] bg-white/[0.014] py-8 lg:grid-cols-[0.68fr_1.32fr] lg:gap-12 lg:py-10"
+          >
+            <div className="px-1 sm:px-0 lg:border-r lg:border-white/[0.075] lg:pr-10">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.34em] text-silver-300/[0.45]">
+                  GOOGLE REVIEWS
+                </p>
+                <h2 className="mt-6 max-w-md text-4xl font-medium leading-[1.04] tracking-[-0.01em] text-silver-100 sm:text-5xl">
+                  What Our Customers Say
+                </h2>
+                <p className="mt-6 max-w-md text-base leading-8 text-silver-300/[0.58]">
+                  Every pair tells a story. Here are a few words from customers who trusted Sole Shifu with theirs.
+                </p>
+
+                <div className="mt-10 border-y border-white/[0.075] py-7">
+                  <GoogleStars className="gap-1.5" />
+                  <p className="mt-5 text-2xl font-medium tracking-[-0.01em] text-silver-100">5.0 Google Rating</p>
+                  <p className="mt-2 text-sm leading-6 text-silver-300/[0.56]">Based on verified customer reviews.</p>
+                </div>
+              </div>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+                <Link
+                  href={googleReviewsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-[0.7rem] bg-silver-100 px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-ink-950 transition duration-700 hover:-translate-y-px hover:bg-white"
+                >
+                  Read All Reviews on Google
+                  <ArrowRight className="size-4" />
+                </Link>
+                <Link
+                  href={googleReviewsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 items-center justify-center rounded-[0.7rem] border border-silver-100/[0.12] px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-silver-100/[0.78] transition duration-700 hover:-translate-y-px hover:border-silver-100/[0.24] hover:bg-white/[0.035]"
+                >
+                  Leave a Review
+                </Link>
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              {visibleReviews.map((review, index) => (
+                <motion.figure
+                  key={review.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                  className="grid gap-6 border border-white/[0.065] bg-black/[0.14] p-5 transition duration-700 hover:border-white/[0.12] hover:bg-white/[0.022] sm:grid-cols-[0.28fr_1fr]"
+                >
+                  <figcaption className="border-b border-white/[0.06] pb-5 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-5">
+                    <p className="text-sm font-medium text-silver-100">{review.name}</p>
+                    <GoogleStars className="mt-4" />
+                    <p className="mt-5 w-fit border border-white/[0.08] px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-silver-300/[0.48]">
+                      {review.badge}
+                    </p>
+                  </figcaption>
+                  <blockquote className="line-clamp-3 text-sm leading-7 text-silver-300/[0.7]">
+                    &ldquo;{review.text}&rdquo;
+                  </blockquote>
+                </motion.figure>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
